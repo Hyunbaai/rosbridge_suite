@@ -305,6 +305,10 @@ class Protocol:
             if has_binary(msg) or self.bson_only_mode:
                 return bson.BSON.encode(msg)
             else:
+                if msg.op == "png":
+                    msg.data = str(msg.data)
+                else:
+                    pass
                 return json.dumps(msg)
         except Exception as e:
             self.log("error", f"Unable to serialize message '{msg}': {e}")
